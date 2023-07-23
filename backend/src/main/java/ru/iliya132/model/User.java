@@ -23,6 +23,12 @@ public class User implements UserDetails {
     @Transient
     private String confirmPassword;
 
+    public User(String userName, String password, String confirmPassword) {
+        this.userName = userName;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
+    }
+
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
