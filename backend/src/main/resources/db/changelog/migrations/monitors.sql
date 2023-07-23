@@ -9,3 +9,8 @@ create table monitors (
     url text not null,
     last_run timestamp with time zone
 );
+
+--changeset iliya132:added-next-run-column
+alter table monitors add column next_run timestamp with time zone default now();
+
+create index next_run_idx on monitors(next_run);
