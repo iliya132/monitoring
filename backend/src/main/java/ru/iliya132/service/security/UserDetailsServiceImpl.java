@@ -4,6 +4,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.iliya132.model.User;
 import ru.iliya132.repository.IUserRepository;
 
 @Service
@@ -18,5 +19,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findById(username).orElseThrow(() ->
                 new UsernameNotFoundException("Nothing found for " + username));
+    }
+
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 }

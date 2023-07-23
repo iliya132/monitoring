@@ -1,10 +1,9 @@
 package ru.iliya132.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,8 +16,12 @@ import java.util.List;
 public class User implements UserDetails {
     @Column(name = "name")
     @Id
+    @Email
     private String userName;
+    @Size(min = 3, max = 40)
     private String password;
+    @Transient
+    private String confirmPassword;
 
     public User(String userName, String password) {
         this.userName = userName;
@@ -26,6 +29,14 @@ public class User implements UserDetails {
     }
 
     public User() {
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getUserName() {
