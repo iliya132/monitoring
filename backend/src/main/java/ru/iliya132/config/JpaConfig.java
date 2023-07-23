@@ -15,7 +15,7 @@ public class JpaConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
                                                                        EntityManagerFactoryBuilder entityManagerFactoryBuilder)  {
         return entityManagerFactoryBuilder.dataSource(dataSource)
-                .packages("ru.iliya132.models")
+                .packages("ru.iliya132.model")
                 .build();
     }
 

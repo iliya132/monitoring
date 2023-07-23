@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="/static/auth.css">
+</head>
+
+<body>
+    <div class="modal">
+        <div class="column">
+            <form method="POST" action="register">
+                <h1>Регистрация</h1>
+                <div class="input-group">
+                    <label for="userName">username</label>
+                    <input type="text" id="userName" name="userName" autofocus="true"></input>
+                    <p class="error" th:text="${usernameError}"></p>
+                </div>
+                <div class="input-group">
+                    <label for="password">password:</label>
+                    <input type="password" id=password name="password"></input>
+                </div>
+                <div class="input-group">
+                    <label for="confirmPassword">confirm password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword"></input>
+                    <p class="error" th:text="${passwordError}"></p>
+                </div>
+                <button type="submit" class="submit-btn">confirm</button>
+            </form>
+            <a href="/login" class="link align-right">I already has account</a>
+        </div>
+    </div>
+</body>
+
+</html>

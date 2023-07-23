@@ -1,6 +1,5 @@
 package ru.iliya132.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,12 +7,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
+import ru.iliya132.service.security.AuthEntryPoint;
 
 import java.util.List;
 
@@ -26,6 +26,11 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthEntryPoint authEntryPoint() {
+        return new AuthEntryPoint();
     }
 
     @Bean
@@ -58,8 +63,10 @@ public class SecurityConfig {
                 }).and()
                 .authorizeHttpRequests()
                 .requestMatchers("/login").permitAll()
-                .requestMatchers("/login.html").permitAll()
+                .requestMatchers("/error").permitAll()
                 .requestMatchers("/register").permitAll()
+                .requestMatchers("/perform_login").permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/static/**")).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -70,7 +77,10 @@ public class SecurityConfig {
                 .and()
                 .logout()
                 .deleteCookies("JSESSIONID")
-                .logoutUrl("/perform_logout");
+                .logoutUrl("/perform_logout")
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(authEntryPoint());
         return httpSecurity.build();
     }
 }
