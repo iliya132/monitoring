@@ -41,6 +41,7 @@ allprojects {
         configurations.all {
             resolutionStrategy {
                 failOnVersionConflict()
+                force("org.jetbrains:annotations:17.0.0") // influxdb uses 14.0
             }
         }
     }

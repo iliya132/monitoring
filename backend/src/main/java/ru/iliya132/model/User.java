@@ -31,6 +31,11 @@ public class User implements UserDetails {
     @Transient
     private String confirmPassword;
 
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("USER"));

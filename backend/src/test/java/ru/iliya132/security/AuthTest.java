@@ -43,7 +43,7 @@ public class AuthTest extends BaseMvcTest {
                 .apply(springSecurity())
                 .build();
         defaultUser = new User("default", "default");
-        userService.saveUser(new User(defaultUser.getUserName(), passEncoder.encode(defaultUser.getPassword())));
+        userService.saveUser(new User(defaultUser.getUsername(), passEncoder.encode(defaultUser.getPassword())));
     }
 
     @Test
