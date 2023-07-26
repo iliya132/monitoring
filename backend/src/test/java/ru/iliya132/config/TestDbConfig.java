@@ -1,5 +1,6 @@
 package ru.iliya132.config;
 
+import org.influxdb.InfluxDB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -28,6 +29,11 @@ public class TestDbConfig {
                 postgreSQLContainer.getPassword(),
                 postgreSQLContainer.getDriverClassName());
         return ds;
+    }
+
+    @Bean
+    InfluxDB influxDB() {
+        return TestInfluxDbContainer.getInstance();
     }
 
     @Bean
