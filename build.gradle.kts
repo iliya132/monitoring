@@ -28,6 +28,7 @@ allprojects {
 
     val testcontainersBom: String by project
     val lombok: String by project
+    val hypersistence: String by project
 
     apply(plugin = "io.spring.dependency-management")
     dependencyManagement {
@@ -42,6 +43,8 @@ allprojects {
             resolutionStrategy {
                 failOnVersionConflict()
                 force("org.jetbrains:annotations:17.0.0") // influxdb uses 14.0
+                force("io.hypersistence:hypersistence-utils-hibernate-60:${hypersistence}")
+                force("javax.xml.bind:jaxb-api:2.3.1") // hypersistence
             }
         }
     }

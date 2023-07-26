@@ -10,4 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BaseMvcTest extends BaseDbTest {
+    protected void act(Callback callBack) {
+        try {
+            callBack.act();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @FunctionalInterface
+    protected interface Callback {
+        void act() throws Exception;
+    }
 }

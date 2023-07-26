@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @Id
     @Email
     private String userName;
-    @Size(min = 3, max = 40)
+    @Size(min = 3, max = 80)
     private String password;
     @Transient
     private String confirmPassword;
