@@ -1,6 +1,5 @@
 package ru.iliya132.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.dockerjava.zerodep.shaded.org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http.io.entity.EntityUtils;
 import com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http.message.BasicNameValuePair;
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -35,19 +33,17 @@ public class AuthTest extends BaseMvcTest {
     private WebApplicationContext wac;
     private MockMvc mockMvc;
     private User defaultUser;
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     private UserDetailsServiceImpl userService;
 
     @BeforeEach
     public void setup() {
-        var passEncoder = new BCryptPasswordEncoder();
         mockMvc = MockMvcBuilders.webAppContextSetup(wac)
                 .apply(springSecurity())
                 .build();
         defaultUser = new User("default@default.ru", "default");
-        userService.saveUser(new User(defaultUser.getUsername(), passEncoder.encode(defaultUser.getPassword())));
+        userService.saveUser(new User(defaultUser.getUsername(), defaultUser.getPassword()));
     }
 
     @Test

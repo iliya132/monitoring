@@ -11,6 +11,7 @@ import ru.iliya132.BaseDbTest;
 import ru.iliya132.model.Metric;
 
 import java.time.Instant;
+import java.util.HashMap;
 
 public class MetricServiceTest extends BaseDbTest {
     @Autowired
@@ -29,11 +30,14 @@ public class MetricServiceTest extends BaseDbTest {
     @Test
     public void itCanWriteSingleMetric() {
         // prepare
-        Metric metric = new Metric()
-                .setOwner("test_user")
-                .setSystem("test_system")
-                .setStrValue("200")
-                .addTag("metric_type", "ping");
+        var tags = new HashMap<String, String>();
+        tags.put("metric_type", "ping");
+        Metric metric = Metric.builder()
+                .owner("test_user")
+                .system("test_system")
+                .strValue("200")
+                .tags(tags)
+                .build();
         Instant start = Instant.now();
 
         // act
