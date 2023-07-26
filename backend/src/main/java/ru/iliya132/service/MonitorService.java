@@ -6,9 +6,12 @@ import ru.iliya132.model.Monitor;
 import ru.iliya132.repository.IMonitorRepository;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.PriorityBlockingQueue;
 
 public class MonitorService {
@@ -43,6 +46,6 @@ public class MonitorService {
 
     private Instant calculateNextRun(String cron) {
         CronExpression cronExpression = CronExpression.parse(cron);
-        return cronExpression.next(Instant.now());
+        return Objects.requireNonNull(cronExpression.next(LocalDateTime.now())).toInstant(ZoneOffset.UTC);
     }
 }

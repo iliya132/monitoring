@@ -46,7 +46,7 @@ public class AuthTest extends BaseMvcTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac)
                 .apply(springSecurity())
                 .build();
-        defaultUser = new User("default", "default");
+        defaultUser = new User("default@default.ru", "default");
         userService.saveUser(new User(defaultUser.getUsername(), passEncoder.encode(defaultUser.getPassword())));
     }
 
@@ -58,7 +58,7 @@ public class AuthTest extends BaseMvcTest {
     }
 
     @Test
-    @WithMockUser(username = "default")
+    @WithMockUser(username = "default@default.ru")
     public void canGetIndexPageWhenAuthorized() {
         act(() -> mockMvc.perform(MockMvcRequestBuilders.get("/"))
                 .andExpect(status().is2xxSuccessful()));
@@ -78,7 +78,7 @@ public class AuthTest extends BaseMvcTest {
 
     @Test
     public void canRegister() {
-        var testUser = new User("test", "test", "test");
+        var testUser = new User("test@default.ru", "test", "test");
         act(() -> mockMvc.perform(
                         MockMvcRequestBuilders.post("/register")
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -117,18 +117,5 @@ public class AuthTest extends BaseMvcTest {
                                 ))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login?error=true")));
-    }
-
-    private void act(Callback callBack) {
-        try {
-            callBack.act();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FunctionalInterface
-    interface Callback {
-        void act() throws Exception;
     }
 }
