@@ -1,11 +1,11 @@
-import org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
 import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
+import org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
 
 plugins {
     idea
     id("fr.brouillard.oss.gradle.jgitver")
     id("io.spring.dependency-management")
-    id("org.springframework.boot") apply false
+    id("org.springframework.boot") apply true
 }
 
 idea {
@@ -65,11 +65,6 @@ subprojects {
     extensions.configure<fr.brouillard.oss.gradle.plugins.JGitverPluginExtension> {
         strategy("PATTERN")
         nonQualifierBranches("main,master")
-        tagVersionPattern("\${v}\${<meta.DIRTY_TEXT}")
-        versionPattern(
-                "\${v}\${<meta.COMMIT_DISTANCE}\${<meta.GIT_SHA1_8}" +
-                        "\${<meta.QUALIFIED_BRANCH_NAME}\${<meta.DIRTY_TEXT}-SNAPSHOT"
-        )
     }
 
     tasks.withType<Test> {

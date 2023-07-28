@@ -8,6 +8,7 @@ import ru.iliya132.repository.IMonitorRepository;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -37,15 +38,14 @@ public class MonitorService {
         monitorRepository.saveAll(monitors);
     }
 
-    public PriorityBlockingQueue<Monitor> findAllForExecute() {
-        var toExecute = monitorRepository.findAllForExecution();
-        var queue = new PriorityBlockingQueue<>(toExecute.size(), Comparator.comparing(Monitor::getNextRun));
-        queue.addAll(toExecute);
-        return queue;
+    public List<Monitor> findAllForExecute() {
+        return monitorRepository.findAllForExecution();
     }
 
     private Instant calculateNextRun(String cron) {
         CronExpression cronExpression = CronExpression.parse(cron);
-        return Objects.requireNonNull(cronExpression.next(LocalDateTime.now())).toInstant(ZoneOffset.UTC);
+        return cronExpression.next(LocalDateTime.now())
+                .toInstant(ZoneOffset.UTC)
+                .minus(3, ChronoUnit.HOURS);
     }
 }
