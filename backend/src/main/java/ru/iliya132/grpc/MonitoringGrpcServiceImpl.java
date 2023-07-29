@@ -29,7 +29,6 @@ public class MonitoringGrpcServiceImpl extends RemoteMonitorServiceGrpc.RemoteMo
                 .owner(metric.getOwner())
                 .numericValue(metric.getNumeric())
                 .strValue(metric.getStrValue())
-                .system(metric.getSystem())
                 .time(Instant.ofEpochMilli(metric.getTimestamp()))
                 .tags(metric.getTagsList().stream().collect(Collectors.toMap(Tag::getKey, Tag::getValue)))
                 .build();
