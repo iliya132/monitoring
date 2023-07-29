@@ -1,12 +1,11 @@
-import org.gradle.jvm.tasks.Jar
-import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
 import org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
 
 plugins {
     idea
     id("fr.brouillard.oss.gradle.jgitver")
     id("io.spring.dependency-management")
-    id("org.springframework.boot") apply false
+    id("org.springframework.boot") apply true
 }
 
 idea {
@@ -74,12 +73,6 @@ subprojects {
         reports {
             junitXml.required.set(true)
             html.required.set(true)
-        }
-    }
-
-    tasks.withType<Jar> {
-        manifest {
-            attributes["Main-Class"] = "ru.iliya132.MonitoringBackendApp"
         }
     }
 }
