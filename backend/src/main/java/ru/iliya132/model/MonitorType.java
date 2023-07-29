@@ -1,5 +1,6 @@
 package ru.iliya132.model;
 
 public enum MonitorType {
-    PING
+    PING,
+    RESPONSE_TIME
 }

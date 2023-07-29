@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import ru.iliya132.executors.MonitoringExecutor;
-import ru.iliya132.service.MetricService;
 
 @Configuration
 @Profile("!test")
@@ -20,7 +19,8 @@ public class TmsConfig {
     @Bean
     public MonitoringExecutor monitoringExecutor() {
         return new MonitoringExecutor(serviceConfig.monitorService())
-                .registerProcessor(processorsConfig.pingProcessor());
+                .registerProcessor(processorsConfig.pingProcessor())
+                .registerProcessor(processorsConfig.responseTimeProcessor());
     }
 
     @Scheduled(fixedDelay = 10_000)
