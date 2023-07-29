@@ -24,7 +24,6 @@ public class MonitoringExecutor implements Executor {
         return this;
     }
 
-
     public void start() {
         var toExecute = monitorService.findAllForExecute();
         log.info("found {} monitors to execute", toExecute.size());

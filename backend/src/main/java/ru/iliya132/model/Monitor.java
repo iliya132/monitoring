@@ -33,4 +33,5 @@ public class Monitor {
     private Instant lastRun;
     @Column(name = "next_run")
     private Instant nextRun;
+    private String service;
 }

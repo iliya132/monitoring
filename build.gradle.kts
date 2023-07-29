@@ -5,7 +5,7 @@ plugins {
     idea
     id("fr.brouillard.oss.gradle.jgitver")
     id("io.spring.dependency-management")
-    id("org.springframework.boot") apply true
+    id("org.springframework.boot") apply false
 }
 
 idea {
@@ -29,15 +29,29 @@ allprojects {
     val testcontainersBom: String by project
     val lombok: String by project
     val hypersistence: String by project
+    val protobufBom: String by project
+    val grpc: String by project
+
+    val jmh: String by project
+    val asm: String by project
 
     apply(plugin = "io.spring.dependency-management")
+
     dependencyManagement {
         dependencies {
             imports {
                 mavenBom(BOM_COORDINATES)
                 mavenBom("org.testcontainers:testcontainers-bom:$testcontainersBom")
+                mavenBom("com.google.protobuf:protobuf-bom:$protobufBom")
             }
             dependency("org.projectlombok:lombok:$lombok")
+            dependency("io.grpc:grpc-netty:$grpc")
+
+            dependency("org.openjdk.jmh:jmh-core:$jmh")
+            dependency("org.openjdk.jmh:jmh-generator-annprocess:$jmh")
+            dependency("org.ow2.asm:asm-commons:$asm")
+            dependency("io.grpc:grpc-protobuf:$grpc")
+            dependency("io.grpc:grpc-stub:$grpc")
         }
         configurations.all {
             resolutionStrategy {
@@ -45,6 +59,8 @@ allprojects {
                 force("org.jetbrains:annotations:17.0.0") // influxdb uses 14.0
                 force("io.hypersistence:hypersistence-utils-hibernate-60:${hypersistence}")
                 force("javax.xml.bind:jaxb-api:2.3.1") // hypersistence
+                force("org.checkerframework:checker-qual:3.5.0") // hypersistence
+                force("com.google.errorprone:error_prone_annotations:2.18.0")
             }
         }
     }

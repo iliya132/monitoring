@@ -11,6 +11,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Map;
 
 public class PingProcessor extends MonitorProcessor {
     private HttpClient httpClient = HttpClient.newHttpClient();
@@ -35,7 +36,8 @@ public class PingProcessor extends MonitorProcessor {
             log.info("Successfully pinged {}", monitor.getUrl());
             Metric metric = Metric.builder()
                     .owner(monitor.getOwner())
-                    .numericValue((long) response.statusCode())
+                    .tags(mapToTags(monitor))
+                    .numericValue((double) response.statusCode())
                     .build();
             metricService.write(metric);
         } catch (Exception e) {
@@ -44,5 +46,8 @@ public class PingProcessor extends MonitorProcessor {
         }
     }
 
-
+    private Map<String, String> mapToTags(Monitor monitor) {
+        return Map.of("system", monitor.getService(),
+                "type", monitor.getMonitorType().name());
+    }
 }
