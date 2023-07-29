@@ -9,5 +9,4 @@
     </preConditions>
     <include file="migrations/users.sql" relativeToChangelogFile="true"/>
     <include file="migrations/monitors.sql" relativeToChangelogFile="true"/>
-    <include file="migrations/raw_events.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

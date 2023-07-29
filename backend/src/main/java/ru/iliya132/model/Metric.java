@@ -22,7 +22,7 @@ public class Metric {
     @Column(name = "owner")
     private String owner;
     @Column(name = "numeric_value")
-    private Long numericValue;
+    private Double numericValue;
     @Column(name = "str_value")
     private String strValue;
     @Column(name = "time")

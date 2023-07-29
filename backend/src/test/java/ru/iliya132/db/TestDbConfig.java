@@ -25,8 +25,7 @@ public class TestDbConfig extends BaseDbTest {
                 "databasechangeloglock",
                 "databasechangelog",
                 "users",
-                "monitors",
-                "raw_events"
+                "monitors"
         ));
     }
 }

@@ -2,8 +2,8 @@ package ru.iliya132.service;
 
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.iliya132.model.Metric;
 
 import java.util.ArrayList;
@@ -12,14 +12,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
-@Service
 public class MetricService {
     private final InfluxDB influxDB;
+    private Logger log = LoggerFactory.getLogger(MetricService.class);
 
-    public MetricService(InfluxDB influxDB, @Value("${spring.influx.database}") String influxDatabase) {
+    public MetricService(InfluxDB influxDB, String influxDatabase) {
         this.influxDB = influxDB;
         influxDB.setDatabase(influxDatabase);
-        influxDB.enableBatch(100, 1, TimeUnit.SECONDS);
+        influxDB.enableBatch(100, 5, TimeUnit.SECONDS);
     }
 
     public void write(Metric metric) {
@@ -45,7 +45,10 @@ public class MetricService {
                         .addFieldsFromPOJO(it)
                         .tag(it.getTags())
                         .build())
-                .forEach(influxDB::write); // retention enabled - this is batched operation
+                .forEach(it -> {
+                    log.info("writing {} to influx", it);
+                    influxDB.write(it);
+                }); // retention enabled - this is batched operation
     }
 
     static class MetricTransaction {
