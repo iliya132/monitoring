@@ -20,7 +20,8 @@ public class TmsConfig {
     public MonitoringExecutor monitoringExecutor() {
         return new MonitoringExecutor(serviceConfig.monitorService())
                 .registerProcessor(processorsConfig.pingProcessor())
-                .registerProcessor(processorsConfig.responseTimeProcessor());
+                .registerProcessor(processorsConfig.responseTimeProcessor())
+                .registerProcessor(processorsConfig.responseProcessor());
     }
 
     @Scheduled(fixedDelay = 10_000)
