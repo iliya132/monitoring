@@ -3,7 +3,7 @@ syntax = "proto3";
 package ru.iliya132.monitoring.protobuf.generated;
 option java_multiple_files = true;
 
-message Metric {
+message MetricRequest {
   string system = 1;
   string owner = 2;
   double numeric = 3;
@@ -20,5 +20,5 @@ message Tag {
 message Empty {}
 
 service RemoteMonitorService {
-  rpc push(Metric) returns (Empty);
+  rpc push(MetricRequest) returns (Empty);
 }

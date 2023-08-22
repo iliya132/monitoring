@@ -24,3 +24,6 @@ alter table monitors add column if not exists service varchar(50) not null;
 
 --changeset iliya132:processors-add-response-time-processor
 alter type monitor_type add value 'RESPONSE_TIME';
+
+--changeset iliya132:processors-add-response-processor
+alter type monitor_type add value 'RESPONSE';
