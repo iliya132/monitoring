@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import ru.iliya132.executors.MonitoringExecutor;
 
 @Configuration
-@Profile("!test")
+@Profile({"!test"})
 public class TmsConfig {
     @Autowired
     private ServiceConfig serviceConfig;

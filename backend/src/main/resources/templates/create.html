@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Информация</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/index">Информация</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/create">Создать</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <form action="#" th:action="@{/api/monitor/register}" th:object="${dto}" method="post" class="row g-3">
+      <input class="form-control" type="text" th:field="*{cron}" id="cron" placeholder="cron expression">
+      <input class="form-control" type="text" th:field="*{description}" id="description" placeholder="description">
+      <select class="form-select" th:field="*{type}" id="type">
+        <option selected value="PING">PING</option>
+        <option value="RESPONSE_TIME">RESPONSE_TIME</option>
+        <option value="RESPONSE">RESPONSE</option>
+      </select>
+      <input class="form-control" type="text" th:field="*{url}" id="url" placeholder="url">
+      <input class="form-control" type="text" th:field="*{service}" id="service" placeholder="service name">
+      <input class="btn btn-primary" type="button" onclick="registerMonitor()" value="Отправить">
+    </form>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script>
+    function registerMonitor() {
+      let cron = document.getElementById('cron').value
+      let description = document.getElementById('description').value
+      let type = document.getElementById('type').value
+      let url = document.getElementById('url').value
+      let service = document.getElementById('service').value
+      let monitor = {
+        "cron": cron,
+        "description": description,
+        "type": type,
+        "url": url,
+        "service": service
+      }
+      fetch('/api/monitor/register', {
+        method: 'POST',
+        body: JSON.stringify(monitor),
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

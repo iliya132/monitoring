@@ -1,6 +1,7 @@
 package ru.iliya132.service;
 
 import org.apache.commons.lang3.NotImplementedException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.scheduling.support.CronExpression;
 import ru.iliya132.model.Monitor;
 import ru.iliya132.repository.IMonitorRepository;
@@ -38,6 +39,10 @@ public class MonitorService {
         monitorRepository.saveAll(monitors);
     }
 
+    public List<Monitor> findForUser(@NotNull String userId) {
+        return monitorRepository.findByUserId(userId);
+    }
+
     public List<Monitor> findAllForExecute() {
         return monitorRepository.findAllForExecution();
     }
@@ -47,5 +52,9 @@ public class MonitorService {
         return cronExpression.next(LocalDateTime.now())
                 .toInstant(ZoneOffset.UTC)
                 .minus(3, ChronoUnit.HOURS);
+    }
+
+    public void delete(Long monitorId) {
+        monitorRepository.deleteById(monitorId);
     }
 }
