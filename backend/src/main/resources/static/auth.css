@@ -1,0 +1,67 @@
+.modal {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin-top: 10%;
+}
+
+.column {
+    max-width: 70%;
+    margin-right: auto;
+    height: 100%;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+* {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+td {
+    width: 100%;
+}
+
+.submit-btn {
+    display: block;
+    margin: 0 0 0 auto;
+    outline: none;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.link {
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+.error {
+    color: red;
+}
+
+input {
+    margin: auto 0 auto auto;
+    display: inline-block;
+}
+
+label {
+    margin: auto auto auto 0;
+}
+
+h1 {
+    text-align: center;
+}

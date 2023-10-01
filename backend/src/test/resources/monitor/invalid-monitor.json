@@ -1,0 +1,5 @@
+{
+  "cron": "* 5 * * * *",
+  "description": "dump task every 5 minutes",
+  "type": "PING"
+}

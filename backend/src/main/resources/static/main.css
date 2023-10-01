@@ -1,0 +1,9 @@
+h1 {
+    text-align: center;
+}
+
+.container {
+    box-sizing: border-box;
+    min-height: 100vh;
+    padding: 30px;
+}
