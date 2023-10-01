@@ -2,13 +2,13 @@ package ru.iliya132.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.support.CronExpression;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.iliya132.exception.InvalidMonitorException;
 import ru.iliya132.model.Monitor;
 import ru.iliya132.service.MonitorService;
 
-@RestController("/monitor")
+@RestController
+@RequestMapping("/monitor")
 public class MonitorController {
     @Autowired
     private MonitorService monitorService;
@@ -16,6 +16,11 @@ public class MonitorController {
     public void register(Monitor monitor) {
         validateMonitor(monitor);
         monitorService.save(monitor);
+    }
+
+    @DeleteMapping(value = "/delete/{monitor_id}")
+    public void delete(@PathVariable("monitor_id") Long monitorId) {
+        monitorService.delete(monitorId);
     }
 
     private void validateMonitor(Monitor monitor) {

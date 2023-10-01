@@ -27,3 +27,7 @@ alter type monitor_type add value 'RESPONSE_TIME';
 
 --changeset iliya132:processors-add-response-processor
 alter type monitor_type add value 'RESPONSE';
+
+--changeset iliya132:added-user-id-index
+create index user_id_idx on monitors(owner);
+

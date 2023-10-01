@@ -1,7 +1,7 @@
 {
   "cron": "* 5 * * * *",
   "description": "dump task every 5 minutes",
-  "monitorType": "PING",
+  "type": "PING",
   "url": "http://localhost:8080",
   "service": "test-service"
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import ru.iliya132.exception.InvalidMonitorException;
 import ru.iliya132.model.Monitor;
+import ru.iliya132.model.MonitorType;
+import ru.iliya132.model.dto.MonitorDto;
 import ru.iliya132.service.MonitorService;
 
 import java.security.Principal;
@@ -20,12 +22,18 @@ public class MonitorRegistrationController {
     @Autowired
     private MonitorService monitorService;
 
-    @PostMapping("/register")
-    public void register(@RequestBody Monitor monitor, Principal principal) {
+    @PostMapping(path = "/register")
+    public void register(@RequestBody MonitorDto dto, Principal principal) {
         try {
+            Monitor monitor = Monitor.builder()
+                    .cron(dto.getCron())
+                    .monitorType(MonitorType.valueOf(dto.getType()))
+                    .url(dto.getUrl())
+                    .description(dto.getDescription())
+                    .owner(principal.getName())
+                    .service(dto.getService())
+                    .build();
             validateOrThrow(monitor);
-            var userName = principal.getName();
-            monitor.setOwner(userName);
             monitorService.save(monitor);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "provided monitor is invalid");
